@@ -29,6 +29,15 @@ function inputFormatter() {
 
 const displayField = document.querySelector("#displayField");
 
+// The next two event listeners ensure the cursor always stays at the end of the input field
+displayField.addEventListener('input', function() {
+  displayField.setSelectionRange(displayField.value.length, displayField.value.length);
+});
+
+displayField.addEventListener('click', function() {
+  displayField.setSelectionRange(displayField.value.length, displayField.value.length);
+});
+
 displayField.addEventListener("keypress", (event) => {
   if (event.key === "+") operator = add;
   else if (event.key === "-") operator = subtract;
