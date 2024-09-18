@@ -1,6 +1,7 @@
 let num1;
 let num2;
 let operator;
+let parsedExpression;
 
 function add(num1, num2) {
   return num1 + num2;
@@ -17,11 +18,11 @@ function divide(num1, num2) {
 
 const calcScreen = document.querySelector("#displayField");
 
-function inputFormatter() {
-  output = calcScreen.value.split(/([+\-*/])/); //split by operator
-  num1 = Number(output[0]);
-  operator = output[1];
-  num2 = Number(output[2]);
+function parseInput() {
+  parsedExpression = calcScreen.value.split(/([+\-*/])/); //split by operator
+  if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
+  if (parsedExpression[1]) operator = parsedExpression[1];
+  if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
 }
 
 function operate() {
@@ -35,26 +36,31 @@ function operate() {
   return Number.isInteger(result) ? result : result.toFixed(2);
 }
 
-calcScreen.addEventListener("keypress", (event) => {
+calcScreen.addEventListener("keyup", (event) => {
+  parseInput();
   if (event.key === "Enter") {
-    inputFormatter();
     calcScreen.value = operate();
   }
+  console.log(parsedExpression);
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
 buttonGroup.addEventListener("click", function (e) {
-  if (e.target.className === "regularButton") calcScreen.value += e.target.textContent;
+  if (e.target.className === "regularButton") {
+    calcScreen.value += e.target.textContent;
+    parseInput()
+    console.log(parsedExpression);
+  }
 });
 
-const submitButton = document.querySelector(".submit")
+const submitButton = document.querySelector(".submit");
 submitButton.addEventListener("click", () => {
-  inputFormatter();
+  parseInput();
   calcScreen.value = operate();
-})
+});
 
-const clearButton = document.querySelector(".clearButton")
-clearButton.addEventListener("click", () => calcScreen.value = "")
+const clearButton = document.querySelector(".clearButton");
+clearButton.addEventListener("click", () => (calcScreen.value = ""));
 
 // The next two event listeners ensure the cursor always stays at the end of the input field
 calcScreen.addEventListener("input", function () {
