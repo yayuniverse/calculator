@@ -1,3 +1,7 @@
+let num1 = null;
+let num2 = null;
+let operator = null;
+
 // Operator functions
 function add(num1, num2) {
   return num1 + num2;
@@ -13,10 +17,25 @@ function divide(num1, num2) {
 }
 
 // Operate function
-function operate(num1, num2, operator) {
-  return operator(num1, num2)
+function operate() {
+  console.log(operator(num1, num2));
 }
 
-const num1 = null;
-const num2 = null;
-const operator = null;
+function inputFormatter() {
+  output = displayField.value.split(/([+\-*/])/);
+  num1 = Number(output[0]);
+  num2 = Number(output[output.length - 1]);
+}
+
+const displayField = document.querySelector("#displayField");
+
+displayField.addEventListener("keypress", (event) => {
+  if (event.key === "+") operator = add;
+  else if (event.key === "-") operator = subtract;
+  else if (event.key === "*") operator = multiply;
+  else if (event.key === "/") operator = divide;
+  else if (event.key === "Enter") {
+    inputFormatter();
+    operate();
+  }
+});
