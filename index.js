@@ -1,6 +1,6 @@
-let num1 = null;
-let num2 = null;
-let operator = null;
+let num1;
+let num2;
+let operator;
 
 // Operator functions
 function add(num1, num2) {
@@ -27,11 +27,14 @@ function inputFormatter() {
 
 // Operate function
 function operate() {
-  if (operator === "+") return add(num1, num2);
-  else if (operator === "-") return subtract(num1, num2);
-  else if (operator === "*") return multiply(num1, num2);
-  else if (operator === "/") return divide(num1, num2);
+  let result;
+  if (operator === "+") result = add(num1, num2);
+  else if (operator === "-") result = subtract(num1, num2);
+  else if (operator === "*") result = multiply(num1, num2);
+  else if (operator === "/" && num2 === 0) return "No can do 😒"
+  else if (operator === "/") result = divide(num1, num2);
   else return "Error: Invalid operator";
+  return Number.isInteger(result)  ? result : result.toFixed(2);
 }
 
 displayField.addEventListener("keypress", (event) => {
