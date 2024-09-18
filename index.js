@@ -2,6 +2,7 @@ let num1;
 let num2;
 let operator;
 let parsedExpression;
+let result;
 
 function add(num1, num2) {
   return num1 + num2;
@@ -23,17 +24,28 @@ function parseInput() {
   if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
   if (parsedExpression[1]) operator = parsedExpression[1];
   if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
+  limitToTwoOperands();
+}
+
+function limitToTwoOperands() {
+  if (parsedExpression.length > 3) {
+    operate();
+  }
+  if (typeof result === "number") {
+    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 2]}`
+    result = null;
+  }
 }
 
 function operate() {
-  let result;
   if (operator === "+") result = add(num1, num2);
   else if (operator === "-") result = subtract(num1, num2);
   else if (operator === "*") result = multiply(num1, num2);
   else if (operator === "/" && num2 === 0) return "No can do 😒";
   else if (operator === "/") result = divide(num1, num2);
   else return "Error: Invalid operator";
-  return Number.isInteger(result) ? result : result.toFixed(2);
+  if (Number.isNaN(result)) return "Put numbers in me daddy";
+  return Number.isInteger(result) ? result : Number(result.toFixed(2));
 }
 
 calcScreen.addEventListener("keyup", (event) => {
@@ -48,7 +60,7 @@ const buttonGroup = document.querySelector(".buttonGroup");
 buttonGroup.addEventListener("click", function (e) {
   if (e.target.className === "regularButton") {
     calcScreen.value += e.target.textContent;
-    parseInput()
+    parseInput();
     console.log(parsedExpression);
   }
 });

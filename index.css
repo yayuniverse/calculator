@@ -25,6 +25,6 @@ body {
     height: 64px;
     font-size: 32px;
     text-align: right;
-    padding: 0 24px;
+    padding-right: 24px;
     caret-color: transparent;
 }
