@@ -42,6 +42,20 @@ calcScreen.addEventListener("keypress", (event) => {
   }
 });
 
+const buttonGroup = document.querySelector(".buttonGroup");
+buttonGroup.addEventListener("click", function (e) {
+  if (e.target.className === "regularButton") calcScreen.value += e.target.textContent;
+});
+
+const submitButton = document.querySelector(".submit")
+submitButton.addEventListener("click", () => {
+  inputFormatter();
+  calcScreen.value = operate();
+})
+
+const clearButton = document.querySelector(".clearButton")
+clearButton.addEventListener("click", () => calcScreen.value = "")
+
 // The next two event listeners ensure the cursor always stays at the end of the input field
 calcScreen.addEventListener("input", function () {
   calcScreen.setSelectionRange(
@@ -49,23 +63,9 @@ calcScreen.addEventListener("input", function () {
     calcScreen.value.length,
   );
 });
-
 calcScreen.addEventListener("click", function () {
   calcScreen.setSelectionRange(
     calcScreen.value.length,
     calcScreen.value.length,
   );
 });
-
-const buttonGroup = document.querySelector(".buttonGroup");
-
-buttonGroup.addEventListener("click", function (e) {
-  if (e.target.className === "regularButton") calcScreen.value += e.target.textContent;
-});
-
-const submitButton = document.querySelector(".submit")
-
-submitButton.addEventListener("click", () => {
-  inputFormatter();
-  calcScreen.value = operate();
-})
