@@ -2,7 +2,6 @@ let num1;
 let num2;
 let operator;
 
-// Operator functions
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -16,16 +15,15 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 
-const displayField = document.querySelector("#displayField");
+const calcScreen = document.querySelector("#displayField");
 
 function inputFormatter() {
-  output = displayField.value.split(/([+\-*/])/); //split by operator
+  output = calcScreen.value.split(/([+\-*/])/); //split by operator
   num1 = Number(output[0]);
   operator = output[1];
   num2 = Number(output[2]);
 }
 
-// Operate function
 function operate() {
   let result;
   if (operator === "+") result = add(num1, num2);
@@ -37,24 +35,24 @@ function operate() {
   return Number.isInteger(result)  ? result : result.toFixed(2);
 }
 
-displayField.addEventListener("keypress", (event) => {
+calcScreen.addEventListener("keypress", (event) => {
   if (event.key === "Enter") {
     inputFormatter();
-    displayField.value = operate();
+    calcScreen.value = operate();
   }
 });
 
 // The next two event listeners ensure the cursor always stays at the end of the input field
-displayField.addEventListener("input", function () {
-  displayField.setSelectionRange(
-    displayField.value.length,
-    displayField.value.length,
+calcScreen.addEventListener("input", function () {
+  calcScreen.setSelectionRange(
+    calcScreen.value.length,
+    calcScreen.value.length,
   );
 });
 
-displayField.addEventListener("click", function () {
-  displayField.setSelectionRange(
-    displayField.value.length,
-    displayField.value.length,
+calcScreen.addEventListener("click", function () {
+  calcScreen.setSelectionRange(
+    calcScreen.value.length,
+    calcScreen.value.length,
   );
 });
