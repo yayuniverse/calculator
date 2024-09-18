@@ -29,10 +29,10 @@ function operate() {
   if (operator === "+") result = add(num1, num2);
   else if (operator === "-") result = subtract(num1, num2);
   else if (operator === "*") result = multiply(num1, num2);
-  else if (operator === "/" && num2 === 0) return "No can do 😒"
+  else if (operator === "/" && num2 === 0) return "No can do 😒";
   else if (operator === "/") result = divide(num1, num2);
   else return "Error: Invalid operator";
-  return Number.isInteger(result)  ? result : result.toFixed(2);
+  return Number.isInteger(result) ? result : result.toFixed(2);
 }
 
 calcScreen.addEventListener("keypress", (event) => {
@@ -56,3 +56,16 @@ calcScreen.addEventListener("click", function () {
     calcScreen.value.length,
   );
 });
+
+const buttonGroup = document.querySelector(".buttonGroup");
+
+buttonGroup.addEventListener("click", function (e) {
+  if (e.target.className === "regularButton") calcScreen.value += e.target.textContent;
+});
+
+const submitButton = document.querySelector(".submit")
+
+submitButton.addEventListener("click", () => {
+  inputFormatter();
+  calcScreen.value = operate();
+})
