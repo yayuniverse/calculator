@@ -32,18 +32,16 @@ function parseInput() {
   if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
   if (parsedExpression[1]) operator = parsedExpression[1];
   if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
-  // limitToTwoOperands();
+  limitToTwoOperands();
 }
 
-// function limitToTwoOperands() {
-//   if (parsedExpression.length > 3) {
-//     operate();
-//   }
-//   if (typeof result === "number") {
-//     calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 2]}`
-//     result = null;
-//   }
-// }
+function limitToTwoOperands() {
+  if (parsedExpression.length > 3) {
+    operate();
+    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 1]}`
+    result = null;
+  }
+}
 
 function operate() {
   if (operator === "+") result = add(num1, num2);
