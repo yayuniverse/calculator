@@ -79,7 +79,14 @@ submitButton.addEventListener("click", () => {
 });
 
 const clearButton = document.querySelector(".clearButton");
-clearButton.addEventListener("click", () => (calcScreen.value = ""));
+clearButton.addEventListener("click", () => {
+  calcScreen.value = "";
+  num1 = null;
+  num2 = null;
+  operator = null;
+  parsedExpression = null;
+  result = null;
+});
 
 // The next two event listeners ensure the cursor always stays at the end of the input field
 calcScreen.addEventListener("input", function () {
