@@ -20,22 +20,30 @@ function divide(num1, num2) {
 const calcScreen = document.querySelector("#displayField");
 
 function parseInput() {
-  parsedExpression = calcScreen.value.split(/([+\-*/])/); //split by operator
+  parsedExpression = calcScreen.value
+    .split(/([+\-*/])/) //split by operator
+    .filter((item) => item !== ""); //remove empty strings
+
+  if (parsedExpression[0] === "-" && parsedExpression[1]) {
+    parsedExpression[0] = parsedExpression[0] + parsedExpression[1];
+    parsedExpression.splice(1, 1);
+  }
+
   if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
   if (parsedExpression[1]) operator = parsedExpression[1];
   if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
-  limitToTwoOperands();
+  // limitToTwoOperands();
 }
 
-function limitToTwoOperands() {
-  if (parsedExpression.length > 3) {
-    operate();
-  }
-  if (typeof result === "number") {
-    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 2]}`
-    result = null;
-  }
-}
+// function limitToTwoOperands() {
+//   if (parsedExpression.length > 3) {
+//     operate();
+//   }
+//   if (typeof result === "number") {
+//     calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 2]}`
+//     result = null;
+//   }
+// }
 
 function operate() {
   if (operator === "+") result = add(num1, num2);
@@ -52,6 +60,7 @@ calcScreen.addEventListener("keyup", (event) => {
   parseInput();
   if (event.key === "Enter") {
     calcScreen.value = operate();
+    parseInput();
   }
   console.log(parsedExpression);
 });
