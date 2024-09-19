@@ -19,7 +19,7 @@ function divide(num1, num2) {
 
 const calcScreen = document.querySelector("#displayField");
 
-function parseInput() {
+function parseExpression() {
   parsedExpression = calcScreen.value
     .split(/([+\-*/])/) //split by operator
     .filter((item) => item !== ""); //remove empty strings
@@ -55,10 +55,10 @@ function operate() {
 }
 
 calcScreen.addEventListener("keyup", (event) => {
-  parseInput();
+  parseExpression();
   if (event.key === "Enter") {
     calcScreen.value = operate();
-    parseInput();
+    parseExpression();
   }
   console.log(parsedExpression);
 });
@@ -67,14 +67,14 @@ const buttonGroup = document.querySelector(".buttonGroup");
 buttonGroup.addEventListener("click", function (e) {
   if (e.target.className === "regularButton") {
     calcScreen.value += e.target.textContent;
-    parseInput();
+    parseExpression();
     console.log(parsedExpression);
   }
 });
 
 const submitButton = document.querySelector(".submit");
 submitButton.addEventListener("click", () => {
-  parseInput();
+  parseExpression();
   calcScreen.value = operate();
 });
 
