@@ -20,6 +20,12 @@ function divide(num1, num2) {
 const calcScreen = document.querySelector("#displayField");
 
 function parseExpression() {
+  splitInputIntoArray()
+  assignExpressionToVariables()
+  limitToTwoOperands();
+}
+
+function splitInputIntoArray() {
   parsedExpression = calcScreen.value
     .split(/([+\-*/])/) //split by operator
     .filter((item) => item !== ""); //remove empty strings
@@ -28,17 +34,21 @@ function parseExpression() {
     parsedExpression[0] = parsedExpression[0] + parsedExpression[1];
     parsedExpression.splice(1, 1);
   }
+}
 
+function assignExpressionToVariables() {
   if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
+  else num1 = null;
   if (parsedExpression[1]) operator = parsedExpression[1];
+  else operator = null;
   if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
-  limitToTwoOperands();
+  else num2 = null;
 }
 
 function limitToTwoOperands() {
   if (parsedExpression.length > 3) {
     operate();
-    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 1]}`
+    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 1]}`;
     result = null;
   }
 }
