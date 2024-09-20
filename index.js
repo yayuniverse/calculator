@@ -20,8 +20,8 @@ function divide(num1, num2) {
 const calcScreen = document.querySelector("#displayField");
 
 function parseExpression() {
-  splitInputIntoArray()
-  assignExpressionToVariables()
+  splitInputIntoArray();
+  assignExpressionToVariables();
   limitToTwoOperands();
 }
 
@@ -38,11 +38,8 @@ function splitInputIntoArray() {
 
 function assignExpressionToVariables() {
   if (parsedExpression[0]) num1 = Number(parsedExpression[0]);
-  else num1 = null;
   if (parsedExpression[1]) operator = parsedExpression[1];
-  else operator = null;
   if (parsedExpression[2]) num2 = Number(parsedExpression[2]);
-  else num2 = null;
 }
 
 function limitToTwoOperands() {
@@ -64,6 +61,15 @@ function operate() {
   return Number.isInteger(result) ? result : Number(result.toFixed(2));
 }
 
+function clearDisplay() {
+  calcScreen.value = "";
+  num1 = null;
+  num2 = null;
+  operator = null;
+  parsedExpression = null;
+  result = null;
+}
+
 calcScreen.addEventListener("keyup", (event) => {
   parseExpression();
   if (event.key === "Enter") {
@@ -71,6 +77,14 @@ calcScreen.addEventListener("keyup", (event) => {
     parseExpression();
   }
   console.log(parsedExpression);
+});
+
+calcScreen.addEventListener("keydown", (event) => {
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    clearDisplay();
+    parseExpression()
+  }
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
@@ -89,14 +103,7 @@ submitButton.addEventListener("click", () => {
 });
 
 const clearButton = document.querySelector(".clearButton");
-clearButton.addEventListener("click", () => {
-  calcScreen.value = "";
-  num1 = null;
-  num2 = null;
-  operator = null;
-  parsedExpression = null;
-  result = null;
-});
+clearButton.addEventListener("click", clearDisplay);
 
 // The next two event listeners ensure the cursor always stays at the end of the input field
 calcScreen.addEventListener("input", function () {
