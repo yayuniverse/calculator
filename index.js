@@ -21,13 +21,15 @@ const calcScreen = document.querySelector("#displayField");
 
 function parseExpression() {
   splitInputIntoArray();
+  console.log(parsedExpression);
   assignExpressionToVariables();
+  console.log(num1, operator, num2);
   limitToTwoOperands();
 }
 
 function splitInputIntoArray() {
   parsedExpression = calcScreen.value
-    .split(/([+\-*/])/) //split by operator
+    .split(/([+\-*/=])/) //split by operator and equals sign
     .filter((item) => item !== ""); //remove empty strings
 
   if (parsedExpression[0] === "-" && parsedExpression[1]) {
@@ -47,44 +49,51 @@ function limitToTwoOperands() {
     operate();
     calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 1]}`;
     result = null;
+    resetExpressionVariables();
   }
+}
+
+function resetExpressionVariables() {
+  num1 = null;
+  num2 = null;
+  operator = null;
 }
 
 function operate() {
   if (operator === "+") result = add(num1, num2);
   else if (operator === "-") result = subtract(num1, num2);
   else if (operator === "*") result = multiply(num1, num2);
-  else if (operator === "/" && num2 === 0) return "No can do 😒";
   else if (operator === "/") result = divide(num1, num2);
-  else return "Error: Invalid operator";
+  else if (operator === "/" && num2 === 0) return "No can do 😒";
+  else return "Invalid operator";
+
   if (Number.isNaN(result)) return "Put numbers in me daddy";
   return Number.isInteger(result) ? result : Number(result.toFixed(2));
 }
 
 function clearDisplay() {
   calcScreen.value = "";
-  num1 = null;
-  num2 = null;
-  operator = null;
+  resetExpressionVariables();
   parsedExpression = null;
   result = null;
 }
 
 calcScreen.addEventListener("keyup", (event) => {
   parseExpression();
-  if (event.key === "Enter") {
+  if (event.key === "Enter" || event.key === "=") {
     calcScreen.value = operate();
     parseExpression();
+    resetExpressionVariables();
   }
-  console.log(parsedExpression);
 });
 
 calcScreen.addEventListener("keydown", (event) => {
   if (event.key === "Backspace") {
     event.preventDefault();
     clearDisplay();
-    parseExpression()
-  }
+    parseExpression();
+    resetExpressionVariables();
+  } else if (event.key === "=") event.preventDefault();
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
