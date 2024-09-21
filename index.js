@@ -53,6 +53,14 @@ function limitToTwoOperands() {
   }
 }
 
+function isFloat(num) {
+  return Number.isFinite(num) && !Number.isInteger(num);
+}
+
+function hasDecimal(operand) {
+  return operand.toString().includes(".");
+}
+
 function resetExpressionVariables() {
   num1 = null;
   num2 = null;
@@ -94,14 +102,45 @@ calcScreen.addEventListener("keydown", (event) => {
     parseExpression();
     resetExpressionVariables();
   } else if (event.key === "=") event.preventDefault();
+  else if (
+    event.key === "." &&
+    hasDecimal(parsedExpression[0]) &&
+    !parsedExpression[2]
+  )
+    event.preventDefault();
+  else if (event.key === "." && hasDecimal(parsedExpression[2]))
+    event.preventDefault();
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
+
 buttonGroup.addEventListener("click", function (e) {
   if (e.target.className === "regularButton") {
     calcScreen.value += e.target.textContent;
     parseExpression();
     console.log(parsedExpression);
+  }
+
+  function canAddDecimalToFirstOperand(parsedExpression) {
+    return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
+  }
+
+  function canAddDecimalToSecondOperand(parsedExpression, operator) {
+    return operator && !hasDecimal(parsedExpression[2]);
+  }
+
+  if (
+    e.target.className === "decimalButton" &&
+    canAddDecimalToFirstOperand(parsedExpression)
+  ) {
+    calcScreen.value += e.target.textContent;
+    parseExpression();
+  } else if (
+    e.target.className === "decimalButton" &&
+    canAddDecimalToSecondOperand(parsedExpression, operator)
+  ) {
+    calcScreen.value += e.target.textContent;
+    parseExpression();
   }
 });
 
