@@ -1,8 +1,4 @@
-let num1;
-let num2;
-let operator;
-let parsedExpression;
-let result;
+let num1, num2, operator, parsedExpression, result;
 
 function add(num1, num2) {
   return num1 + num2;
@@ -58,7 +54,8 @@ function isFloat(num) {
 }
 
 function hasDecimal(operand) {
-  return operand.toString().includes(".");
+  if (operand) return operand.toString().includes(".");
+  else if (!operand) return false;
 }
 
 function resetExpressionVariables() {
@@ -104,15 +101,22 @@ calcScreen.addEventListener("keydown", (event) => {
   } else if (event.key === "=") event.preventDefault();
   else if (
     event.key === "." &&
-    hasDecimal(parsedExpression[0]) &&
-    !parsedExpression[2]
-  )
+    !canAddDecimalToFirstOperand(parsedExpression) &&
+    !canAddDecimalToSecondOperand(parsedExpression, operator)
+  ) {
     event.preventDefault();
-  else if (event.key === "." && hasDecimal(parsedExpression[2]))
-    event.preventDefault();
+  }
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
+
+function canAddDecimalToFirstOperand(parsedExpression) {
+  return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
+}
+
+function canAddDecimalToSecondOperand(parsedExpression, operator) {
+  return operator && !hasDecimal(parsedExpression[2]);
+}
 
 buttonGroup.addEventListener("click", function (e) {
   if (e.target.className === "regularButton") {
@@ -121,23 +125,9 @@ buttonGroup.addEventListener("click", function (e) {
     console.log(parsedExpression);
   }
 
-  function canAddDecimalToFirstOperand(parsedExpression) {
-    return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
-  }
-
-  function canAddDecimalToSecondOperand(parsedExpression, operator) {
-    return operator && !hasDecimal(parsedExpression[2]);
-  }
-
   if (
     e.target.className === "decimalButton" &&
-    canAddDecimalToFirstOperand(parsedExpression)
-  ) {
-    calcScreen.value += e.target.textContent;
-    parseExpression();
-  } else if (
-    e.target.className === "decimalButton" &&
-    canAddDecimalToSecondOperand(parsedExpression, operator)
+    (canAddDecimalToFirstOperand(parsedExpression) || canAddDecimalToSecondOperand(parsedExpression, operator))
   ) {
     calcScreen.value += e.target.textContent;
     parseExpression();
