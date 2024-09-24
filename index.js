@@ -1,4 +1,5 @@
 let num1, num2, operator, parsedExpression, result;
+const acceptedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*', '='];
 
 function add(num1, num2) {
   return num1 + num2;
@@ -32,6 +33,10 @@ function splitInputIntoArray() {
     parsedExpression[0] = parsedExpression[0] + parsedExpression[1];
     parsedExpression.splice(1, 1);
   }
+  if (parsedExpression[2] === "-") {
+    parsedExpression[2] = parsedExpression[2] + parsedExpression[3];
+    parsedExpression.splice(3, 1);
+  }
 }
 
 function assignExpressionToVariables() {
@@ -41,9 +46,12 @@ function assignExpressionToVariables() {
 }
 
 function limitToTwoOperands() {
-  if (parsedExpression.length > 3) {
+  if (parsedExpression.length > 3 && parsedExpression[2] !== "-") {
     operate();
-    calcScreen.value = `${result}${parsedExpression[parsedExpression.length - 1]}`;
+    calcScreen.value =
+      result === "Put numbers in me daddy"
+        ? result
+        : `${result}${parsedExpression[parsedExpression.length - 1]}`;
     result = null;
     resetExpressionVariables();
   }
@@ -72,7 +80,11 @@ function operate() {
   else if (operator === "/" && num2 === 0) return "No can do 😒";
   else return "Invalid operator";
 
-  if (Number.isNaN(result)) return "Put numbers in me daddy";
+  console.log(`result: ${result} and typeof: ${typeof result}`);
+  if (Number.isNaN(result)) {
+    result = "Put numbers in me daddy";
+    return result;
+  }
   return Number.isInteger(result) ? result : Number(result.toFixed(2));
 }
 
@@ -105,6 +117,8 @@ calcScreen.addEventListener("keydown", (event) => {
     !canAddDecimalToSecondOperand(parsedExpression, operator)
   ) {
     event.preventDefault();
+  } else if (!acceptedChars.includes(event.key)) {
+    event.preventDefault()
   }
 });
 
@@ -127,7 +141,8 @@ buttonGroup.addEventListener("click", function (e) {
 
   if (
     e.target.className === "decimalButton" &&
-    (canAddDecimalToFirstOperand(parsedExpression) || canAddDecimalToSecondOperand(parsedExpression, operator))
+    (canAddDecimalToFirstOperand(parsedExpression) ||
+      canAddDecimalToSecondOperand(parsedExpression, operator))
   ) {
     calcScreen.value += e.target.textContent;
     parseExpression();
