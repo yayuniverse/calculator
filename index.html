@@ -3,12 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Calculator</title>
         <link rel="stylesheet" href="index.css" />
         <script src="index.js" defer></script>
     </head>
     <body>
+        <div class="header">
+            <video autoplay loop width="72px">
+                <source src="Operators.mp4" type="video/mp4" />
+            </video>
+            <button type="button" class="infoButton">Info</button>
+        </div>
+
         <div class="calculator">
+            <button type="button" class="clearButton">Clear</button>
             <input
                 type="text"
                 id="displayField"
@@ -18,23 +26,22 @@
                 autofocus
             />
             <div class="buttonGroup">
-                <button type="button" class="regularButton">0</button>
-                <button type="button" class="regularButton">1</button>
-                <button type="button" class="regularButton">2</button>
-                <button type="button" class="regularButton">3</button>
-                <button type="button" class="regularButton">4</button>
-                <button type="button" class="regularButton">5</button>
-                <button type="button" class="regularButton">6</button>
                 <button type="button" class="regularButton">7</button>
                 <button type="button" class="regularButton">8</button>
                 <button type="button" class="regularButton">9</button>
-                <button type="button" class="regularButton">+</button>
-                <button type="button" class="regularButton">-</button>
-                <button type="button" class="regularButton">/</button>
                 <button type="button" class="regularButton">*</button>
-                <button type="button" class="clearButton">Clear</button>
+                <button type="button" class="regularButton">4</button>
+                <button type="button" class="regularButton">5</button>
+                <button type="button" class="regularButton">6</button>
+                <button type="button" class="regularButton">/</button>
+                <button type="button" class="regularButton">1</button>
+                <button type="button" class="regularButton">2</button>
+                <button type="button" class="regularButton">3</button>
+                <button type="button" class="regularButton">-</button>
+                <button type="button" class="regularButton">0</button>
                 <button type="button" class="decimalButton">.</button>
                 <button type="button" class="submit">=</button>
+                <button type="button" class="regularButton">+</button>
             </div>
         </div>
     </body>

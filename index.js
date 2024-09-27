@@ -1,5 +1,22 @@
 let num1, num2, operator, parsedExpression, result;
-const acceptedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '/', '*', '='];
+const acceptedChars = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "+",
+  "-",
+  "/",
+  "*",
+  "=",
+  ".",
+];
 
 function add(num1, num2) {
   return num1 + num2;
@@ -49,7 +66,7 @@ function limitToTwoOperands() {
   if (parsedExpression.length > 3 && parsedExpression[2] !== "-") {
     operate();
     calcScreen.value =
-      result === "Put numbers in me daddy"
+      result === "Put numbers in me"
         ? result
         : `${result}${parsedExpression[parsedExpression.length - 1]}`;
     result = null;
@@ -82,7 +99,7 @@ function operate() {
 
   console.log(`result: ${result} and typeof: ${typeof result}`);
   if (Number.isNaN(result)) {
-    result = "Put numbers in me daddy";
+    result = "Put numbers in me";
     return result;
   }
   return Number.isInteger(result) ? result : Number(result.toFixed(2));
@@ -118,14 +135,16 @@ calcScreen.addEventListener("keydown", (event) => {
   ) {
     event.preventDefault();
   } else if (!acceptedChars.includes(event.key)) {
-    event.preventDefault()
+    event.preventDefault();
   }
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
 
 function canAddDecimalToFirstOperand(parsedExpression) {
-  return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
+  if (parsedExpression)
+    return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
+  else return true;
 }
 
 function canAddDecimalToSecondOperand(parsedExpression, operator) {
@@ -156,7 +175,11 @@ submitButton.addEventListener("click", () => {
 });
 
 const clearButton = document.querySelector(".clearButton");
-clearButton.addEventListener("click", clearDisplay);
+clearButton.addEventListener("click", () => {
+  clearDisplay();
+});
+
+document.addEventListener("click", () => calcScreen.focus());
 
 // The next two event listeners ensure the cursor always stays at the end of the input field
 calcScreen.addEventListener("input", function () {
