@@ -112,6 +112,16 @@ function clearDisplay() {
   result = null;
 }
 
+function canAddDecimalToFirstOperand(parsedExpression) {
+  if (parsedExpression)
+    return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
+  else return true;
+}
+
+function canAddDecimalToSecondOperand(parsedExpression, operator) {
+  return operator && !hasDecimal(parsedExpression[2]);
+}
+
 calcScreen.addEventListener("keyup", (event) => {
   parseExpression();
   if (event.key === "Enter" || event.key === "=") {
@@ -140,17 +150,6 @@ calcScreen.addEventListener("keydown", (event) => {
 });
 
 const buttonGroup = document.querySelector(".buttonGroup");
-
-function canAddDecimalToFirstOperand(parsedExpression) {
-  if (parsedExpression)
-    return !hasDecimal(parsedExpression[0]) && !parsedExpression[2];
-  else return true;
-}
-
-function canAddDecimalToSecondOperand(parsedExpression, operator) {
-  return operator && !hasDecimal(parsedExpression[2]);
-}
-
 buttonGroup.addEventListener("click", function (e) {
   if (e.target.className === "regularButton") {
     calcScreen.value += e.target.textContent;
@@ -193,4 +192,9 @@ calcScreen.addEventListener("click", function () {
     calcScreen.value.length,
     calcScreen.value.length,
   );
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.querySelector("video");
+  video.play();
 });
