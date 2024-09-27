@@ -193,8 +193,3 @@ calcScreen.addEventListener("click", function () {
     calcScreen.value.length,
   );
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const video = document.querySelector("video");
-  video.play();
-});
