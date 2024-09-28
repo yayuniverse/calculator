@@ -75,6 +75,27 @@ video {
     color: rgba(255, 255, 255, 0.7);
 }
 
+.multiplication {
+    color: #734CA9;
+    font-size: 40px;
+}
+
+.division {
+    color: #E2973C;
+    font-size: 40px;
+}
+
+.subtraction {
+    color: #E63746;
+    font-size: 40px;
+}
+
+.addition {
+    color: #6CB654;
+    font-size: 40px;
+}
+
+
 .clearButton {
     font-size: 14px;
     font-family: "Switzer-Regular", sans-serif;

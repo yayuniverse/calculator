@@ -151,7 +151,7 @@ calcScreen.addEventListener("keydown", (event) => {
 
 const buttonGroup = document.querySelector(".buttonGroup");
 buttonGroup.addEventListener("click", function (e) {
-  if (e.target.className === "regularButton") {
+  if (e.target.classList.contains("regularButton")) {
     calcScreen.value += e.target.textContent;
     parseExpression();
     console.log(parsedExpression);
@@ -192,4 +192,9 @@ calcScreen.addEventListener("click", function () {
     calcScreen.value.length,
     calcScreen.value.length,
   );
+});
+
+const infoButton = document.querySelector(".infoButton");
+infoButton.addEventListener("click", () => {
+  alert("The calculator performs the following key operations:\n\n1. **Basic Arithmetic**: Addition, subtraction, multiplication, and division.\n\n2. **Real-time Display**: Calculations are shown as they are input.\n\n3. **Input Validation**: Only valid numerical inputs and operators are accepted.\n\n4. **Clear Function**: Users can reset the calculation with a single button press.\n\n5. **Keyboard Support**: Numbers and operators can be input via keyboard for faster calculations.\n\nThis functionality is implemented using JavaScript, with event listeners and functions for mathematical operations and display updates.")
 });
